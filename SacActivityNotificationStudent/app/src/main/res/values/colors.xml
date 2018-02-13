@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e53935</color>
+    <color name="colorPrimaryDark">#FF4081</color>
+    <color name="colorAccent">#dfdfdf</color> <!--FF4081-->
+    <color name="gradientPink">#caec407a</color>
+    <color name="gradientViolet">#ecab47bc</color>
+    <color name="gradientBlue">#f7304ffe</color>
+    <color name="colorInputLogin">#dfdfdf</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorGreyLight">#e2e2e2</color>
+    <color name="colorTeal">#009688</color>
+    <color name="colorGrey">#3e3e3e</color>
+    <color name="colorSuperlightGrey">#ffffff</color>
+</resources>
