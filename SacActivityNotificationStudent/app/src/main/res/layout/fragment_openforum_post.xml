@@ -13,7 +13,7 @@
 
     </android.support.v7.widget.RecyclerView>
 
-   <!-- <android.support.design.widget.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabCreatePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,10 +21,10 @@
         android:layout_marginEnd="32dp"
         android:clickable="true"
         android:tint="@color/colorWhite"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/colorTeal"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />-->
+        app:srcCompat="@drawable/ic_create_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>

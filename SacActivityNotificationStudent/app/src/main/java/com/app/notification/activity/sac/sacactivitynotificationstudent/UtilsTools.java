@@ -1,7 +1,15 @@
 package com.app.notification.activity.sac.sacactivitynotificationstudent;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -11,6 +19,8 @@ import java.util.TimeZone;
  */
 
 public class UtilsTools {
+    public String StudentNumber;
+    private String userName;
 
     public static String getDateToStrig(){
         Calendar c = Calendar.getInstance();
@@ -43,4 +53,35 @@ public class UtilsTools {
         String[] months = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
         return months[num_month-1];
     }
+
+    public String getUserName(){
+        final DatabaseReference mdatabase = FirebaseDatabase.getInstance().getReference();
+        mdatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("studentNumber").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String studentNumber  = dataSnapshot.getValue(String.class);
+                mdatabase.child("pub_users").child(studentNumber).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String username = dataSnapshot.getValue(String.class);
+                        userName = username;
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return userName;
+    }
+
 }

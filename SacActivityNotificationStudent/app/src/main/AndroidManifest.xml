@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +25,8 @@
         <activity android:name=".ActivityCreateOpenForumPost" />
         <activity android:name=".Announcements" />
         <activity android:name=".Welcomeback" />
-        <activity
-            android:name=".CreateForumPost"
-            android:label="@string/title_activity_create_forum_post"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".BarCodeScanner" />
+        <activity android:name=".WriteForumPost"></activity>
     </application>
 
 </manifest>

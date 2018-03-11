@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
@@ -19,13 +20,24 @@ public class Announcements extends AppCompatActivity {
     Toolbar toolbar;
     TextView signOut,menuAdminPost,menuFreedomWall;
     FirebaseAuth  mAuth;
+    String studentNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announcements);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         mAuth = FirebaseAuth.getInstance();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle.getString("studentNumber")!= null)
+        {
+           studentNumber = bundle.getString("studentNumber");
+            Toast.makeText(Announcements.this,studentNumber,Toast.LENGTH_SHORT).show();
+            Toast.makeText(Announcements.this,mAuth.getCurrentUser().getDisplayName(),Toast.LENGTH_SHORT).show();
+        }
+
+
 
         toolbar.setTitle("SAC-SR Announcements");
         slidingRootNav = new SlidingRootNavBuilder(this)
@@ -39,6 +51,7 @@ public class Announcements extends AppCompatActivity {
                 .withRootViewYTranslation(4)
                 .withMenuLayout(R.layout.menu_left_drawer)
                 .inject();
+
 
         signOut  = (TextView) findViewById(R.id.signOut);
         menuAdminPost = (TextView)findViewById(R.id.lblAdminPost);
@@ -63,13 +76,14 @@ public class Announcements extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                Intent i =  new Intent(Announcements.this,MainActivity.class);
+                Intent i =  new Intent(Announcements.this,LoginActivity.class);
                 startActivity(i);
                 Announcements.this.finish();
             }
         });
         loadFragment(new AdminPostFragment());
     }
+
     private void loadFragment(Fragment fragment) {
 // create a FragmentManager
         FragmentManager fm = getFragmentManager();

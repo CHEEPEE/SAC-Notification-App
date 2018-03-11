@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbackground"
-    tools:context="com.app.notification.activity.sac.sacactivitynotificationstudent.MainActivity">
+    tools:context="com.app.notification.activity.sac.sacactivitynotificationstudent.LoginActivity">
 
     <TextView
         android:id="@+id/lbl_msg"

@@ -53,8 +53,6 @@ public class CreatePostMapModel {
         result.put("postKey",postKey);
         result.put("timestamp",timestamp);
 
-
-
         return result;
     }
 

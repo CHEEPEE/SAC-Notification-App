@@ -63,7 +63,7 @@ public class ActivityCreateOpenForumPost extends AppCompatActivity {
         return valid;
     }
 
-/*    private void publishPost(final String title ,final String content){
+    private void publishPost(final String title ,final String content){
 
             String key = mDataBase.push().getKey();
             CreatePostMapModel createPostMapModel = new CreatePostMapModel("Admin",title,content,"Empty","null",key,mAuth.getCurrentUser().getUid(),UtilsTools.getDateToStrig());
@@ -82,6 +82,6 @@ public class ActivityCreateOpenForumPost extends AppCompatActivity {
                     Toast.makeText(ActivityCreateOpenForumPost.this,"Error Posting", Toast.LENGTH_SHORT).show();
                 }
             });
-        }*/
+        }
 
 }

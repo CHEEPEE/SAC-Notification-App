@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbackground"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,6 +41,18 @@
         app:layout_constraintStart_toStartOf="@+id/lblAdminPost"
         app:layout_constraintTop_toBottomOf="@+id/lblAdminPost" />
     <TextView
+        android:id="@+id/lblProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+
+        android:text="Profile Setting"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/lblOpenForum"
+        app:layout_constraintTop_toBottomOf="@+id/lblOpenForum" />
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -56,7 +67,6 @@
         android:textStyle="bold"
 
         android:drawableTint="@color/colorWhite"
-        android:drawableLeft="@drawable/ic_arrow_back_black_24dp"
         android:drawablePadding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

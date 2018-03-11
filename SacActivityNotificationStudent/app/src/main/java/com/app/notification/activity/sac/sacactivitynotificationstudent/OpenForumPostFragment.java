@@ -41,17 +41,15 @@ public class OpenForumPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_openforum_post,container,false);
-        //fabCreatePost = (FloatingActionButton) view.findViewById(R.id.fabCreatePost);
+        fabCreatePost = (FloatingActionButton) view.findViewById(R.id.fabCreatePost);
         context = getActivity();
-/*
         fabCreatePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent i = new Intent(context,CreateForumPost.class);
+               Intent i = new Intent(context,WriteForumPost.class);
                startActivity(i);
             }
         });
-*/
 
         postFeedRecyclerViewAdapter = new PostFeedRecyclerViewAdapter(getActivity(),postFeedModelsArray);
         postFeedRecyclerView = (RecyclerView) view.findViewById(R.id.adminPostFeed);
@@ -69,7 +67,6 @@ public class OpenForumPostFragment extends Fragment {
                     PostFeedModel FeedMdel = new PostFeedModel();
                     CreatePostMapModel createPostMapModel = dataSnapshot1.getValue(CreatePostMapModel.class);
                     FeedMdel.setAuthor(createPostMapModel.author);
-
                     FeedMdel.setContent(createPostMapModel.textBody);
                     FeedMdel.setAuthorImg(createPostMapModel.imgURL);
                     FeedMdel.setPostImageURL(createPostMapModel.postImageUrl);
@@ -112,4 +109,9 @@ public class OpenForumPostFragment extends Fragment {
         });
         return view;
     }
+
+
+
+
+
 }
