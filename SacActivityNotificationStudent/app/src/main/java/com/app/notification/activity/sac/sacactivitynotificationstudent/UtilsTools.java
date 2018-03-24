@@ -1,5 +1,11 @@
 package com.app.notification.activity.sac.sacactivitynotificationstudent;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -82,6 +88,26 @@ public class UtilsTools {
         });
 
         return userName;
+    }
+    public static void errorMessageDialog(Context context, String msg){
+        final Dialog dialog = new Dialog(context);
+        dialog.setCancelable(true);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(R.layout.edit_post);
+//        dialog.setContentView(R.layout.message_dailog);
+//        TextView lblDone = (TextView) dialog.findViewById(R.id.lblDone);
+//        TextView message = (TextView) dialog.findViewById(R.id.messgae);
+//        message.setText(msg);
+//
+//        lblDone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+        dialog.show();
     }
 
 }

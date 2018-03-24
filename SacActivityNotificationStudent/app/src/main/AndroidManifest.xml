@@ -27,6 +27,7 @@
         <activity android:name=".Welcomeback" />
         <activity android:name=".BarCodeScanner" />
         <activity android:name=".WriteForumPost"></activity>
+        <activity android:name=".EditPost"></activity>
     </application>
 
 </manifest>

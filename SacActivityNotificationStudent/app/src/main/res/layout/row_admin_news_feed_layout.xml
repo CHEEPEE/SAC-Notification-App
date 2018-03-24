@@ -6,6 +6,19 @@
     android:background="@color/colorSuperlightGrey"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_edit_black_24dp"
+        android:tint="@color/colorGrey"
+        app:layout_constraintBottom_toBottomOf="@+id/postHeader"
+        app:layout_constraintEnd_toEndOf="@+id/postMessage"
+        app:layout_constraintTop_toTopOf="@+id/postHeader" />
+
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"

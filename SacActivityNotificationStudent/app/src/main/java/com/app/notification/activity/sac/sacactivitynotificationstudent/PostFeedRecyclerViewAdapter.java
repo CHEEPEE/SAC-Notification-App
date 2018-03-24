@@ -2,7 +2,9 @@ package com.app.notification.activity.sac.sacactivitynotificationstudent;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -12,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,14 +53,16 @@ public class PostFeedRecyclerViewAdapter extends RecyclerView.Adapter<PostFeedRe
                 timeDate,
                 lblComments,
                 btnSend,
-                postTitle;
+                postTitle,btnDone;
         public EditText inputMessage;
+        public ImageView edit;
         public RecyclerView commentList;
 
 
         public MyViewHolder(View view){
             super(view);
 
+            edit = (ImageView) view.findViewById(R.id.options);
             lblComments = (TextView) view.findViewById(R.id.lblComments);
             author = (TextView) view.findViewById(R.id.username);
             title = (TextView) view.findViewById(R.id.postHeader);
@@ -83,6 +89,66 @@ public class PostFeedRecyclerViewAdapter extends RecyclerView.Adapter<PostFeedRe
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final PostFeedModel postFeedModel = postFeedModels.get(position);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user.getUid().equals(postFeedModel.getmAuthorID())){
+            holder.edit.setVisibility(View.VISIBLE);
+        }else {
+            holder.edit.setVisibility(View.INVISIBLE);
+        }
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setCancelable(true);
+
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setContentView(R.layout.edit_post);
+                final TextInputEditText titleInput = (TextInputEditText) dialog.findViewById(R.id.inputTitle);
+                final TextInputEditText message = (TextInputEditText) dialog.findViewById(R.id.inputMessage);
+                TextView btnDelete = (TextView) dialog.findViewById(R.id.btnDelete);
+                titleInput.setText(postFeedModel.getPostTitle());
+                message.setText(postFeedModel.getContent());
+                holder.btnDone = (TextView) dialog.findViewById(R.id.btnDone);
+                holder.btnDone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String key = postFeedModel.getKey();
+                        CreatePostMapModel createPostMapModel = new CreatePostMapModel("Admin",titleInput.getText().toString(),message.getText().toString(),"Empty","null",key,mAuth.getCurrentUser().getUid(),UtilsTools.getDateToStrig());
+                        Map<String,Object> postValue = createPostMapModel.toMap();
+                        Map<String,Object> childUpdates = new HashMap<>();
+                        childUpdates.put(key,postValue);
+                        FirebaseDatabase.getInstance().getReference().child("OpenForumPost").updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                dialog.dismiss();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                Toast.makeText(context,"Error Posting", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseDatabase.getInstance().getReference().child("OpenForumPost").child(postFeedModel.getKey()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                });
+
+
+                dialog.show();
+            }
+        });
+
         mdatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         holder.author.setText(postFeedModel.getAuthor());
@@ -129,6 +195,7 @@ public class PostFeedRecyclerViewAdapter extends RecyclerView.Adapter<PostFeedRe
                         addComment(holder.inputMessage,position);
                     }
                 });
+
                 final CommentsPostFeedRecyclerViewAdapter commentsPostFeedRecyclerViewAdapter = new CommentsPostFeedRecyclerViewAdapter(context,commentDataModels);
                 holder.commentList.setLayoutManager(new LinearLayoutManager(context));
                 holder.commentList.setAdapter(commentsPostFeedRecyclerViewAdapter);
@@ -163,6 +230,8 @@ public class PostFeedRecyclerViewAdapter extends RecyclerView.Adapter<PostFeedRe
     public int getItemCount() {
         return postFeedModels.size();
     }
+
+
     private void addComment(final EditText comment,final int position){
   String key = mdatabase.push().getKey();
   CommentMapModel commentMapModel = new CommentMapModel(mAuth.getCurrentUser().getDisplayName(),comment.getText().toString(),UtilsTools.getDateToStrig());
