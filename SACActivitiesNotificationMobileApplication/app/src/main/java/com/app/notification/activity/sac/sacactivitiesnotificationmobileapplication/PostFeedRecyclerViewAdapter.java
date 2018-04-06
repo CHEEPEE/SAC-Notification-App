@@ -190,12 +190,30 @@ public class PostFeedRecyclerViewAdapter extends RecyclerView.Adapter<PostFeedRe
                                 Toast.makeText(context,"Error Posting", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        FirebaseDatabase.getInstance().getReference().child("adminPost").updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                dialog.dismiss();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                Toast.makeText(context,"Error Posting", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         FirebaseDatabase.getInstance().getReference().child("OpenForumPost").child(postFeedModel.getKey()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                dialog.dismiss();
+                            }
+                        });
+                        FirebaseDatabase.getInstance().getReference().child("adminPost").child(postFeedModel.getKey()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 dialog.dismiss();

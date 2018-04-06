@@ -41,6 +41,32 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/lblAdminPost"
         app:layout_constraintTop_toBottomOf="@+id/lblAdminPost" />
+
+    <TextView
+        android:id="@+id/lblAddStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_mono_thin"
+        android:text="Add Student"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/lblOpenForum"
+        app:layout_constraintTop_toBottomOf="@+id/lblOpenForum" />
+
+    <TextView
+        android:id="@+id/lblResetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_mono_thin"
+        android:text="Change Password"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/lblAddStudent"
+        app:layout_constraintTop_toBottomOf="@+id/lblAddStudent" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

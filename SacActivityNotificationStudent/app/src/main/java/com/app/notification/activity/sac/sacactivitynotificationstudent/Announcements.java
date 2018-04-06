@@ -1,24 +1,31 @@
 package com.app.notification.activity.sac.sacactivitynotificationstudent;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 public class Announcements extends AppCompatActivity {
     SlidingRootNav slidingRootNav;
     Toolbar toolbar;
-    TextView signOut,menuAdminPost,menuFreedomWall;
+    TextView signOut,menuAdminPost,menuFreedomWall,lblProfile;
     FirebaseAuth  mAuth;
     String studentNumber;
     @Override
@@ -56,6 +63,37 @@ public class Announcements extends AppCompatActivity {
         signOut  = (TextView) findViewById(R.id.signOut);
         menuAdminPost = (TextView)findViewById(R.id.lblAdminPost);
         menuFreedomWall = (TextView) findViewById(R.id.lblOpenForum);
+        lblProfile = (TextView) findViewById(R.id.lblProfile);
+        lblProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(Announcements.this);
+                dialog.setCancelable(true);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setContentView(R.layout.change_name);
+                final TextInputEditText inputName  = (TextInputEditText) dialog.findViewById(R.id.inputNewName);
+                TextView lblSubmit = (TextView) dialog.findViewById(R.id.lblsubmit);
+                lblSubmit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(inputName.getText().toString()).build();
+
+                        user.updateProfile(profileUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                });
+
+                dialog.show();
+            }
+        });
         menuAdminPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

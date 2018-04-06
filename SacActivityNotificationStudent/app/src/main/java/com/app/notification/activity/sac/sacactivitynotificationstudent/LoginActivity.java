@@ -107,16 +107,13 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
 
-                            if (email.equals("renel@gmail.com ")){
-
-                            }else {
                                 FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("studentNumber").setValue(password);
                                 FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("userId").setValue(user.getUid());
                                 Intent i = new Intent(LoginActivity.this, Welcomeback.class);
                                 startActivity(i);
                                 System.out.println("success");
                                 finish();
-                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             lbl_tryAgain.setVisibility(View.VISIBLE);
